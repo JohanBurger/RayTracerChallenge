@@ -10,18 +10,6 @@ class Color:
     Color class with red, green, and blue attributes.
     """
 
-    @staticmethod
-    def red():
-        return Color(1, 0, 0)
-
-    @staticmethod
-    def green():
-        return Color(0, 1, 0)
-
-    @staticmethod
-    def blue():
-        return Color(0, 0, 1)
-
     def __init__(self, red, green, blue):
         self._red = red
         self._green = green
@@ -65,3 +53,11 @@ class Color:
                          self.blue * other.blue)
         else:
             raise TypeError(f"Can't multiply Color by {format(type(other))}")
+
+
+class Colors:
+    BLACK = Color(0, 0, 0)
+    WHITE = Color(1, 1, 1)
+    RED = Color(1, 0, 0)
+    GREEN = Color(0, 1, 0)
+    BLUE = Color(0, 0, 1)
