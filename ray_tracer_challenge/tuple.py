@@ -1,6 +1,7 @@
 """
 Tuple class and derived classes Point and Vector.
 """
+from constants import EPSILON as EPSILON
 import math
 
 
@@ -8,7 +9,6 @@ class Tuple:
     """
     Tuple class with x, y, z, and w coordinates.
     """
-    _EPSILON = 1E-9
 
     def __init__(self, x, y, z, w):
         (self._x, self._y, self._z, self._w) = (x, y, z, w)
@@ -44,10 +44,10 @@ class Tuple:
         return self._w
 
     def __eq__(self, other):
-        return (abs(self.x - other.x) < self._EPSILON and
-                abs(self.y - other.y) < self._EPSILON and
-                abs(self.z - other.z) < self._EPSILON and
-                abs(self.w - other.w) < self._EPSILON)
+        return (abs(self.x - other.x) < EPSILON and
+                abs(self.y - other.y) < EPSILON and
+                abs(self.z - other.z) < EPSILON and
+                abs(self.w - other.w) < EPSILON)
 
     def __add__(self, other):
         if self.w and other.w:
