@@ -1,7 +1,7 @@
 """
 Tuple class and derived classes Point and Vector.
 """
-from constants import EPSILON as EPSILON
+from ray_tracer_challenge.constants import EPSILON as EPSILON
 import math
 
 
