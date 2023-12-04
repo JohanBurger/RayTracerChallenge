@@ -3,7 +3,7 @@ Unit tests for the Point class.
 """
 import math
 import unittest
-from ray_tracer_challenge.tuple import Tuple, Point, Vector
+from src.ray_tracer_challenge.tuple import Tuple, Point, Vector
 
 
 class TestTuple(unittest.TestCase):
