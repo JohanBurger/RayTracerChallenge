@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import math
 from numbers import Number
 
-from ray_tracer_challenge.constants import EPSILON as EPSILON
+from src.ray_tracer_challenge.constants import EPSILON as EPSILON
 
 
 class Color:
@@ -28,9 +29,9 @@ class Color:
         return self._blue
 
     def __eq__(self, other):
-        return (abs(self.red - other.red) < EPSILON and
-                abs(self.green - other.green) < EPSILON and
-                abs(self.blue - other.blue) < EPSILON)
+        return (math.isclose(self.red, other.red, rel_tol=EPSILON) and
+                math.isclose(self.green, other.green, rel_tol=EPSILON) and
+                math.isclose(self.blue, other.blue, rel_tol=EPSILON))
 
     def __add__(self, other):
         return Color(self.red + other.red,

@@ -1,7 +1,7 @@
 """
 Tuple class and derived classes Point and Vector.
 """
-from ray_tracer_challenge.constants import EPSILON as EPSILON
+from src.ray_tracer_challenge.constants import EPSILON as EPSILON
 import math
 
 
@@ -44,10 +44,10 @@ class Tuple:
         return self._w
 
     def __eq__(self, other):
-        return (abs(self.x - other.x) < EPSILON and
-                abs(self.y - other.y) < EPSILON and
-                abs(self.z - other.z) < EPSILON and
-                abs(self.w - other.w) < EPSILON)
+        return (math.isclose(self.x, other.x, rel_tol=EPSILON) and
+                math.isclose(self.y, other.y, rel_tol=EPSILON) and
+                math.isclose(self.z, other.z, rel_tol=EPSILON) and
+                math.isclose(self.w, other.w, rel_tol=EPSILON))
 
     def __add__(self, other):
         if self.w and other.w:
