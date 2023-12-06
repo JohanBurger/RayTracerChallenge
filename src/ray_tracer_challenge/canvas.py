@@ -1,4 +1,4 @@
-from ray_tracer_challenge.color import Color, Colors
+from src.ray_tracer_challenge.color import Color, Colors
 
 
 class Canvas:

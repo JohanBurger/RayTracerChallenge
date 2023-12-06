@@ -1,7 +1,7 @@
 import unittest
 
-from ray_tracer_challenge.canvas import Canvas
-from ray_tracer_challenge.color import Color, Colors
+from src.ray_tracer_challenge.canvas import Canvas
+from src.ray_tracer_challenge.color import Color, Colors
 
 
 class TestCanvas(unittest.TestCase):
