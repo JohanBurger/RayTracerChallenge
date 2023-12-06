@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from numbers import Number
 
-from ray_tracer_challenge.constants import EPSILON as EPSILON
+from src.ray_tracer_challenge.constants import EPSILON as EPSILON
 
 
 class Color:
