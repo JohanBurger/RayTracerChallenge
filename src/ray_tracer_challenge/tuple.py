@@ -43,11 +43,35 @@ class Tuple:
     def w(self):
         return self._w
 
+    def __getitem__(self, item):
+        if item == 0:
+            return self.x
+        elif item == 1:
+            return self.y
+        elif item == 2:
+            return self.z
+        elif item == 3:
+            return self.w
+        else:
+            raise IndexError("Tuple index out of range")
+
+    def __setitem__(self, key, value):
+        if key == 0:
+            self._x = value
+        elif key == 1:
+            self._y = value
+        elif key == 2:
+            self._z = value
+        elif key == 3:
+            self._w = value
+        else:
+            raise IndexError("Tuple index out of range")
+
     def __eq__(self, other):
-        return (abs(self.x - other.x) < EPSILON and
-                abs(self.y - other.y) < EPSILON and
-                abs(self.z - other.z) < EPSILON and
-                abs(self.w - other.w) < EPSILON)
+        return (math.isclose(self.x, other.x, abs_tol=EPSILON) and
+                math.isclose(self.y, other.y, abs_tol=EPSILON) and
+                math.isclose(self.z, other.z, abs_tol=EPSILON) and
+                math.isclose(self.w, other.w, abs_tol=EPSILON))
 
     def __add__(self, other):
         if self.w and other.w:

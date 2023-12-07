@@ -1,4 +1,5 @@
 import unittest
+
 from src.ray_tracer_challenge.color import Color
 
 
