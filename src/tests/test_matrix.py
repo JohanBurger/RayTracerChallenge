@@ -110,14 +110,14 @@ class TestMatrix(unittest.TestCase):
                          [2, 4, 4, 2],
                          [8, 6, 4, 1],
                          [0, 0, 0, 1]])
-        tuple = Tuple(1, 2, 3, 1)
+        multiplicand = Tuple(1, 2, 3, 1)
         expected_product = Tuple(18, 24, 33, 1)
-        self.assertEqual(expected_product, matrix * tuple)
+        self.assertEqual(expected_product, matrix * multiplicand)
 
     def test_matrix_identity_multiplied_by_tuple(self):
-        tuple = Tuple(1, 2, 3, 1)
+        multiplicand = Tuple(1, 2, 3, 1)
         identity = Matrix.identity()
-        self.assertEqual(tuple, identity * tuple)
+        self.assertEqual(multiplicand, identity * multiplicand)
 
     def test_matrix_transposition(self):
         matrix = Matrix([[0, 9, 3, 0],
