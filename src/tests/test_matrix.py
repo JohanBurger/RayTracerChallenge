@@ -40,6 +40,10 @@ class TestMatrix(unittest.TestCase):
         self.assertEqual(3, m[1, 0])
         self.assertEqual(4, m[1, 1])
 
+    def test_matix_unequal_rows_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            Matrix([[1, 2], [3, 4, 5]])
+
     def test_matrix_4_by_4_equality(self):
         m1 = Matrix([[1, 2, 0.3, 4],
                      [5, 5, 6, 8],

@@ -6,7 +6,9 @@ from src.ray_tracer_challenge.tuple import Tuple
 class Matrix:
     def __init__(self, *args):
         if len(args) == 1 and type(args[0]) is list:
-            # TODO: Validate that all rows are the same length?
+            # Validate that all rows have the same number of columns
+            if max(len(row) for row in args[0]) != min(len(row) for row in args[0]):
+                raise ValueError("All rows must have the same number of columns")
             self._matrix = args[0]
         elif len(args) == 2 and type(args[0]) is int and type(args[1]) is int:
             self._matrix = [[0 for _ in range(args[1])] for _ in range(args[0])]
