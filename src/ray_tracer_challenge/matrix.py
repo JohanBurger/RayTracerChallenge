@@ -79,6 +79,14 @@ class Matrix:
             result[i, i] = 1
         return result
 
+    @classmethod
+    def translation(cls, x, y, z):
+        result = cls.identity()
+        result[0, 3] = x
+        result[1, 3] = y
+        result[2, 3] = z
+        return result
+
     def submatrix(self, skip_row, skip_column):
         result = Matrix(self.rows - 1, self.columns - 1)
         target_row = 0
@@ -127,3 +135,11 @@ class Matrix:
                 inverse[column, row] = cofactor / determinant
 
         return inverse
+
+# class Translation(Matrix):
+#     def __init__(self, x, y, z):
+#         t = Matrix.identity(4)
+#         t[0, 3] = x
+#         t[1, 3] = y
+#         t[2, 3] = z
+#         super().__init__(t)
