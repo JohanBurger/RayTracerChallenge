@@ -79,6 +79,60 @@ class Matrix:
             result[i, i] = 1
         return result
 
+    @classmethod
+    def translation(cls, x, y, z):
+        result = cls.identity()
+        result[0, 3] = x
+        result[1, 3] = y
+        result[2, 3] = z
+        return result
+
+    @classmethod
+    def scaling(cls, x, y, z):
+        result = cls.identity()
+        result[0, 0] = x
+        result[1, 1] = y
+        result[2, 2] = z
+        return result
+
+    @classmethod
+    def rotation_x(cls, radians):
+        result = cls.identity()
+        result[1, 1] = math.cos(radians)
+        result[1, 2] = -math.sin(radians)
+        result[2, 1] = math.sin(radians)
+        result[2, 2] = math.cos(radians)
+        return result
+
+    @classmethod
+    def rotation_y(cls, radians):
+        result = cls.identity()
+        result[0, 0] = math.cos(radians)
+        result[0, 2] = math.sin(radians)
+        result[2, 0] = -math.sin(radians)
+        result[2, 2] = math.cos(radians)
+        return result
+
+    @classmethod
+    def rotation_z(cls, radians):
+        result = cls.identity()
+        result[0, 0] = math.cos(radians)
+        result[0, 1] = -math.sin(radians)
+        result[1, 0] = math.sin(radians)
+        result[1, 1] = math.cos(radians)
+        return result
+
+    @classmethod
+    def shearing(cls, xy, xz, yx, yz, zx, zy):
+        result = cls.identity()
+        result[0, 1] = xy
+        result[0, 2] = xz
+        result[1, 0] = yx
+        result[1, 2] = yz
+        result[2, 0] = zx
+        result[2, 1] = zy
+        return result
+
     def submatrix(self, skip_row, skip_column):
         result = Matrix(self.rows - 1, self.columns - 1)
         target_row = 0
