@@ -31,5 +31,5 @@ class TestColor(unittest.TestCase):
 
     def test_color_multiplication_throws_exception(self):
         c = Color(1, 2, 3)
-        with self.assertRaises(TypeError):
-            c * 'a'
+        self.assertRaises(TypeError, lambda c: c * 'a')
+       

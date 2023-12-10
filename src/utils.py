@@ -1,6 +1,9 @@
-from ray_tracer_challenge.canvas import Canvas
-from ray_tracer_challenge.color import Color, Colors
-from ray_tracer_challenge.tuple import Point, Vector
+import math
+
+from src.ray_tracer_challenge.canvas import Canvas
+from src.ray_tracer_challenge.color import Color, Colors
+from src.ray_tracer_challenge.tuple import Point, Vector
+from src.ray_tracer_challenge.matrix import Matrix
 
 
 def create_test_image():
@@ -55,6 +58,22 @@ def plot_projectile_trajectory():
         f.write(c.to_ppm())
 
 
+def plot_clock():
+    c = Canvas(200, 200)
+
+    origin = Point(0, 0, 0)
+    transformation = Matrix.translation(0, 80, 0)
+    with_length = transformation * origin
+    for i in range(12):
+        with_rotation = Matrix.rotation_z(i * (math.pi / 6)) * with_length
+        with_translation = Matrix.translation(100, 100, 0) * with_rotation
+        c.set_pixel(int(with_translation.x), int(with_translation.y), Colors.RED)
+
+    with open('clock.ppm', 'w') as f:
+        f.write(c.to_ppm())
+
+
 if __name__ == "__main__":
     # create_test_image()
-    plot_projectile_trajectory()
+    # plot_projectile_trajectory()
+    plot_clock()

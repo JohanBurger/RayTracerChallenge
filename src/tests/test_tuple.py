@@ -46,8 +46,7 @@ class TestTuple(unittest.TestCase):
     def test_tuple_addition_of_two_points(self):
         p1 = Point(3, -2, 5)
         p2 = Point(-2, 3, 1)
-        with self.assertRaises(TypeError):
-            p1 + p2
+        self.assertRaises(TypeError, lambda p1, p2: p1 + p2)
 
     def test_tuple_subtraction_of_points(self):
         p1 = Point(3, 2, 1)
