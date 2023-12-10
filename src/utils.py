@@ -74,6 +74,6 @@ def plot_clock():
 
 
 if __name__ == "__main__":
-    # create_test_image()
-    # plot_projectile_trajectory()
+    # Create a test image with `create_test_image()`, or
+    # Plot the trajectory of a projectile with `plot_projectile_trajectory()`
     plot_clock()
