@@ -149,7 +149,7 @@ class Matrix:
         return result
 
     def determinant(self):
-        while self.rows > 2:
+        if self.rows > 2:
             determinant = 0
             for column in range(self.columns):
                 determinant += self[0, column] * self.cofactor(0, column)
