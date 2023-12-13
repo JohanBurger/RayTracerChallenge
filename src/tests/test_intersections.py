@@ -9,7 +9,7 @@ class TestIntersection(unittest.TestCase):
         s = Sphere()
         i = Intersection(3.5, s)
         self.assertEqual(i.t, 3.5)
-        self.assertTrue(i.object is s)
+        self.assertIs(i.object, s)
 
     def test_aggregating_intersections(self):
         s = Sphere()
@@ -26,7 +26,7 @@ class TestIntersection(unittest.TestCase):
         i2 = Intersection(2, s)
         xs = Intersections(i1, i2)
         i = xs.hit()
-        self.assertTrue(i1 is i)
+        self.assertIs(i1, i)
 
     def test_hit_when_some_intersections_have_negative_t(self):
         s = Sphere()
@@ -34,7 +34,7 @@ class TestIntersection(unittest.TestCase):
         i2 = Intersection(1, s)
         xs = Intersections(i1, i2)
         i = xs.hit()
-        self.assertTrue(i2 is i)
+        self.assertIs(i2, i)
 
     def test_hit_when_all_intersections_have_negative_t(self):
         s = Sphere()
@@ -52,4 +52,4 @@ class TestIntersection(unittest.TestCase):
         i4 = Intersection(2, s)
         xs = Intersections(i1, i2, i3, i4)
         i = xs.hit()
-        self.assertTrue(i4 is i)
+        self.assertIs(i4, i)

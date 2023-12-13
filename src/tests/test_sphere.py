@@ -9,13 +9,13 @@ from src.ray_tracer_challenge.tuple import Point, Vector
 class TestSphere(unittest.TestCase):
     def test_default_transformation(self):
         s = Sphere()
-        self.assertTrue(s.transform == Matrix.identity())
+        self.assertEqual(Matrix.identity(), s.transform)
 
     def test_change_transformation(self):
         s = Sphere()
         t = Matrix.translation(2, 3, 4)
         s.transform = t
-        self.assertTrue(s.transform is t)
+        self.assertIs(s.transform, t)
 
     def test_intersect_scaled_sphere_with_ray(self):
         r = Ray(Point(0, 0, -5), Vector(0, 0, 1))

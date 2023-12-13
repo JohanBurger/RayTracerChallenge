@@ -27,9 +27,9 @@ class TestRay(unittest.TestCase):
         xs = s.intersect(r)
         self.assertEqual(2, xs.count)
         self.assertEqual(4.0, xs[0].t)
-        self.assertTrue(s is xs[0].object)
+        self.assertIs(s, xs[0].object)
         self.assertEqual(6.0, xs[1].t)
-        self.assertTrue(s is xs[1].object)
+        self.assertIs(s, xs[1].object)
 
     def test_ray_intersects_sphere_at_tangent(self):
         r = Ray(Point(0, 1, -5), Vector(0, 0, 1))
@@ -37,9 +37,9 @@ class TestRay(unittest.TestCase):
         xs = s.intersect(r)
         self.assertEqual(2, xs.count)
         self.assertEqual(5.0, xs[0].t)
-        self.assertTrue(s is xs[0].object)
+        self.assertIs(s, xs[0].object)
         self.assertEqual(5.0, xs[1].t)
-        self.assertTrue(s is xs[1].object)
+        self.assertIs(s, xs[1].object)
 
     def test_ray_misses_sphere(self):
         r = Ray(Point(0, 2, -5), Vector(0, 0, 1))
@@ -53,9 +53,9 @@ class TestRay(unittest.TestCase):
         xs = s.intersect(r)
         self.assertEqual(2, xs.count)
         self.assertEqual(-1.0, xs[0].t)
-        self.assertTrue(s is xs[0].object)
+        self.assertIs(s, xs[0].object)
         self.assertEqual(1.0, xs[1].t)
-        self.assertTrue(s is xs[1].object)
+        self.assertIs(s, xs[1].object)
 
     def test_sphere_is_behind_ray(self):
         r = Ray(Point(0, 0, 5), Vector(0, 0, 1))
@@ -63,9 +63,9 @@ class TestRay(unittest.TestCase):
         xs = s.intersect(r)
         self.assertEqual(2, xs.count)
         self.assertEqual(-6.0, xs[0].t)
-        self.assertTrue(s is xs[0].object)
+        self.assertIs(s, xs[0].object)
         self.assertEqual(-4.0, xs[1].t)
-        self.assertTrue(s is xs[1].object)
+        self.assertIs(s, xs[1].object)
 
     def test_ray_translation(self):
         r = Ray(Point(1, 2, 3), Vector(0, 1, 0))
