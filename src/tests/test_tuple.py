@@ -20,13 +20,13 @@ class TestTuple(unittest.TestCase):
         (x, y, z, w) = (4, -4, 3, 1)
         t = Tuple(x, y, z, w)
         self.assertIsInstance(t, Point)
-        self.assertFalse(isinstance(t, Vector))
+        self.assertNotIsInstance(t, Vector)
 
     def test_tuple_vector_is_returned_for_w_0(self):
         (x, y, z, w) = (4, -4, 3, 0)
         t = Tuple(x, y, z, w)
         self.assertIsInstance(t, Vector)
-        self.assertFalse(isinstance(t, Point))
+        self.assertNotIsInstance(t, Point)
 
     def test_tuple_equality(self):
         t1 = Tuple(0.1, 0.2, (0.2 + 0.1), 1)
@@ -94,7 +94,7 @@ class TestPoint(unittest.TestCase):
 
         p = Point(x, y, z)
         self.assertIsInstance(p, Point)
-        self.assertFalse(isinstance(p, Vector))
+        self.assertNotIsInstance(p, Vector)
         self.assertEqual(p.x, x)
         self.assertEqual(p.y, y)
         self.assertEqual(p.z, z)
@@ -106,7 +106,7 @@ class TestVector(unittest.TestCase):
         (x, y, z) = (4, -4, 3)
         v = Vector(x, y, z)
         self.assertIsInstance(v, Vector)
-        self.assertFalse(isinstance(v, Point))
+        self.assertNotIsInstance(v, Point)
         self.assertEqual(v.x, x)
         self.assertEqual(v.y, y)
         self.assertEqual(v.z, z)

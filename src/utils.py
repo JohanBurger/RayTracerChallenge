@@ -2,6 +2,8 @@ import math
 
 from src.ray_tracer_challenge.canvas import Canvas
 from src.ray_tracer_challenge.color import Color, Colors
+from src.ray_tracer_challenge.ray import Ray
+from src.ray_tracer_challenge.sphere import Sphere
 from src.ray_tracer_challenge.tuple import Point, Vector
 from src.ray_tracer_challenge.matrix import Matrix
 
@@ -58,6 +60,28 @@ def plot_projectile_trajectory():
         f.write(c.to_ppm())
 
 
+def trace_sphere():
+    (width, height) = (1024, 800)
+    canvas = Canvas(width, height)
+
+    sphere = Sphere()
+    scaling = height * 0.25
+    sphere.transform = Matrix.scaling(scaling, scaling, scaling)
+    sphere.transform = Matrix.translation(width / 2, height / 2, 0) * sphere.transform
+
+    for y in range(height):
+        for x in range(width):
+            ray = Ray(Point(x, y, -1000), Vector(0, 0, 1))
+            xs = sphere.intersect(ray)
+            color = Color(0.75, 0.75, 0.75)
+            if xs.count > 0:
+                color = Colors.RED
+            canvas.set_pixel(x, y, color)
+
+    with open("sphere.ppm", "w") as f:
+        f.write(canvas.to_ppm())
+
+
 def plot_clock():
     c = Canvas(200, 200)
 
@@ -76,4 +100,5 @@ def plot_clock():
 if __name__ == "__main__":
     # Create a test image with `create_test_image()`, or
     # Plot the trajectory of a projectile with `plot_projectile_trajectory()`
-    plot_clock()
+    # Plot the face of a clock with `plot_clock()`
+    trace_sphere()
