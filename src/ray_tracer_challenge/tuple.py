@@ -103,6 +103,9 @@ class Tuple:
                      self.z / scalar,
                      self.w)
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}(x:{self.x}, y:{self.y}, z:{self.z}, w:{self.w})"
+
 
 class Point(Tuple):
     """

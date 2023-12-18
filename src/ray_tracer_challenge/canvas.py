@@ -8,6 +8,9 @@ class Canvas:
         self._height = height
         self._pixels = [[Colors.BLACK for _ in range(width)] for _ in range(height)]
 
+    def __repr__(self):
+        return f"Canvas(width:{self.width}, height:{self.height})"
+
     @property
     def width(self):
         return self._width

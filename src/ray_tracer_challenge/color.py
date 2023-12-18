@@ -55,6 +55,9 @@ class Color:
         else:
             raise TypeError(f"Can't multiply Color by {format(type(other))}")
 
+    def __repr__(self):
+        return f"Color(red:{self.red}, green:{self.green}, blue:{self.blue})"
+
 
 class Colors:
     BLACK = Color(0, 0, 0)
