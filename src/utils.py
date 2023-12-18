@@ -61,22 +61,32 @@ def plot_projectile_trajectory():
 
 
 def trace_sphere():
-    (width, height) = (1024, 800)
-    canvas = Canvas(width, height)
+    ray_origin = Point(0, 0, -5)
+    wall_z = 10
+    wall_size = 7.0
+    canvas_pixels = 255
+    pixel_size = wall_size / canvas_pixels
+    half = wall_size / 2
 
+    canvas = Canvas(canvas_pixels, canvas_pixels)
+    color = Colors.RED
     sphere = Sphere()
-    scaling = height * 0.25
-    sphere.transform = Matrix.scaling(scaling, scaling, scaling)
-    sphere.transform = Matrix.translation(width / 2, height / 2, 0) * sphere.transform
+    sphere.transform = Matrix.rotation_z(math.pi / 4) * Matrix.scaling(0.5, 1, 1)
+    # sphere.transform = Matrix.shearing(1, 0, 0, 0, 0, 0) * Matrix.scaling(0.5, 1, 1)
 
-    for y in range(height):
-        for x in range(width):
-            ray = Ray(Point(x, y, -1000), Vector(0, 0, 1))
-            xs = sphere.intersect(ray)
-            color = Color(0.75, 0.75, 0.75)
+    # For each row of pixels in the canvas
+    for y in range(canvas_pixels):
+        # Compute the world y coordinate (top = +half, bottom = -half)
+        world_y = half - (pixel_size * y)
+        # For each pixel in the row
+        for x in range(canvas_pixels):
+            # Compute the world x coordinate (left = -half, right = half)
+            world_x = -half + (pixel_size * x)
+            position = Point(world_x, world_y, wall_z)
+            r = Ray(ray_origin, (position - ray_origin).normalize())
+            xs = sphere.intersect(r)
             if xs.count > 0:
-                color = Colors.RED
-            canvas.set_pixel(x, y, color)
+                canvas.set_pixel(x, y, color)
 
     with open("sphere.ppm", "w") as f:
         f.write(canvas.to_ppm())
