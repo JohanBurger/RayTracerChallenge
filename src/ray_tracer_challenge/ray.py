@@ -7,6 +7,9 @@ class Ray:
         self._origin = origin
         self._direction = direction
 
+    def __repr__(self):
+        return f"Ray(origin:{self._origin}, direction:{self._direction})"
+
     @property
     def origin(self) -> Point:
         return self._origin
