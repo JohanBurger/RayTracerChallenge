@@ -2,6 +2,7 @@ from src.ray_tracer_challenge.intersection import Intersection, Intersections
 from src.ray_tracer_challenge.matrix import Matrix
 from src.ray_tracer_challenge.ray import Ray
 from src.ray_tracer_challenge.tuple import Point
+from src.ray_tracer_challenge.tuple import Vector
 
 
 class Sphere:
@@ -26,3 +27,9 @@ class Sphere:
         t2 = (-b + discriminant ** 0.5) / (2 * a)
 
         return Intersections(Intersection(t1, self), Intersection(t2, self))
+
+    def normal_at(self, p: Point) -> Vector:
+        obj_point = self.transform.inverse() * p
+        obj_normal = Vector.normalize(obj_point - Point(0, 0, 0))
+        world_normal = self.transform.inverse().transpose() * obj_normal
+        return Vector.normalize(Vector(world_normal.x, world_normal.y, world_normal.z))

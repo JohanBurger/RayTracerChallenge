@@ -1,1 +1,1 @@
-EPSILON = 1E-9
+EPSILON = 1E-5
