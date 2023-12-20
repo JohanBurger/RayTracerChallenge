@@ -156,6 +156,18 @@ class TestVector(unittest.TestCase):
         self.assertEqual(z.cross(x), y)
         self.assertEqual(x.cross(z), -y)
 
+    def test_reflecting_a_vector_at_45degrees(self):
+        v = Vector(1, -1, 0)
+        n = Vector(0, 1, 0)
+        r = v.reflect(n)
+        self.assertEqual(r, Vector(1, 1, 0))
+
+    def test_reflecting_a_vector_off_a_slanted_surface(self):
+        v = Vector(0, -1, 0)
+        n = Vector((2 ** 0.5 / 2), (2 ** 0.5 / 2), 0)
+        r = v.reflect(n)
+        self.assertEqual(r, Vector(1, 0, 0))
+
 
 if __name__ == '__main__':
     unittest.main()

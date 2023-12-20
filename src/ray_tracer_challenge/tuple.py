@@ -155,3 +155,6 @@ class Vector(Tuple):
         return Vector((self.y * other.z) - (self.z * other.y),
                       (self.z * other.x) - (self.x * other.z),
                       (self.x * other.y) - (self.y * other.x))
+
+    def reflect(self, normal: 'Vector') -> 'Vector':
+        return self - normal * 2 * self.dot(normal)
