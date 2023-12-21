@@ -1,6 +1,7 @@
 import math
 import unittest
 
+from src.ray_tracer_challenge.material import Material
 from src.ray_tracer_challenge.matrix import Matrix
 from src.ray_tracer_challenge.ray import Ray
 from src.ray_tracer_challenge.sphere import Sphere
@@ -71,3 +72,14 @@ class TestSphere(unittest.TestCase):
         s.transform = m
         n = s.normal_at(Point(0, 2 ** 0.5 / 2, -(2 ** 0.5) / 2))
         self.assertEqual(Vector(0, 0.97014, -0.24254), n)
+
+    def test_sphere_has_default_material(self):
+        s = Sphere()
+        self.assertEqual(Material(), s.material)
+
+    def test_sphere_may_be_assigned_material(self):
+        s = Sphere()
+        m = Material()
+        m.ambient = 1
+        s.material = m
+        self.assertIs(m, s.material)
