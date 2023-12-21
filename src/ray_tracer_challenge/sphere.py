@@ -1,4 +1,5 @@
 from src.ray_tracer_challenge.intersection import Intersection, Intersections
+from src.ray_tracer_challenge.material import Material
 from src.ray_tracer_challenge.matrix import Matrix
 from src.ray_tracer_challenge.ray import Ray
 from src.ray_tracer_challenge.tuple import Point
@@ -8,6 +9,7 @@ from src.ray_tracer_challenge.tuple import Vector
 class Sphere:
     def __init__(self):
         self.transform = Matrix.identity()
+        self.material = Material()
 
     def __repr__(self):
         return f"Sphere(transform:{self.transform})"
