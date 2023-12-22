@@ -2,6 +2,7 @@ import unittest
 
 from src.ray_tracer_challenge.color import Color
 from src.ray_tracer_challenge.material import Material
+from src.ray_tracer_challenge.tuple import Light, Point, Vector
 
 
 class TestMaterial(unittest.TestCase):
@@ -12,3 +13,48 @@ class TestMaterial(unittest.TestCase):
         self.assertEqual(m.diffuse, 0.9)
         self.assertEqual(m.specular, 0.9)
         self.assertEqual(m.shininess, 200.0)
+
+    def test_with_eye_between_light_and_surface(self):
+        m = Material()
+        position = Point(0, 0, 0)
+        normal_v = Vector(0, 0, -1)
+        eye_v = Vector(0, 0, -1)
+        light = Light(Point(0, 0, -10), Color(1, 1, 1))
+        result = m.lightning(light, position, eye_v, normal_v)
+        self.assertEqual(Color(1.9, 1.9, 1.9), result)
+
+    def test_with_eye_between_light_and_surface_eye_offset_45_degrees(self):
+        m = Material()
+        position = Point(0, 0, 0)
+        normal_v = Vector(0, 0, -1)
+        eye_v = Vector(0, 2 ** 0.5 / 2, -2 ** 0.5 / 2)
+        light = Light(Point(0, 0, -10), Color(1, 1, 1))
+        result = m.lightning(light, position, eye_v, normal_v)
+        self.assertEqual(Color(1.0, 1.0, 1.0), result)
+
+    def test_with_eye_opposite_surface_light_offset_45_degrees(self):
+        m = Material()
+        position = Point(0, 0, 0)
+        normal_v = Vector(0, 0, -1)
+        eye_v = Vector(0, 0, -1)
+        light = Light(Point(0, 10, -10), Color(1, 1, 1))
+        result = m.lightning(light, position, eye_v, normal_v)
+        self.assertEqual(Color(0.7364, 0.7364, 0.7364), result)
+
+    def test_eye_in_path_of_reflection_vector(self):
+        m = Material()
+        position = Point(0, 0, 0)
+        normal_v = Vector(0, 0, -1)
+        eye_v = Vector(0, -2 ** 0.5 / 2, -2 ** 0.5 / 2)
+        light = Light(Point(0, 10, -10), Color(1, 1, 1))
+        result = m.lightning(light, position, eye_v, normal_v)
+        self.assertEqual(Color(1.6364, 1.6364, 1.6364), result)
+
+    def test_light_behind_surface(self):
+        m = Material()
+        position = Point(0, 0, 0)
+        normal_v = Vector(0, 0, -1)
+        eye_v = Vector(0, 0, -1)
+        light = Light(Point(0, 0, 10), Color(1, 1, 1))
+        result = m.lightning(light, position, eye_v, normal_v)
+        self.assertEqual(Color(0.1, 0.1, 0.1), result)
