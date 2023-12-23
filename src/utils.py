@@ -4,7 +4,7 @@ from src.ray_tracer_challenge.canvas import Canvas
 from src.ray_tracer_challenge.color import Color, Colors
 from src.ray_tracer_challenge.ray import Ray
 from src.ray_tracer_challenge.sphere import Sphere
-from src.ray_tracer_challenge.tuple import Point, Vector
+from src.ray_tracer_challenge.tuple import Light, Point, Vector
 from src.ray_tracer_challenge.matrix import Matrix
 
 
@@ -60,24 +60,30 @@ def plot_projectile_trajectory():
         f.write(c.to_ppm())
 
 
-def trace_sphere():
+def render_sphere(with_ligthing: False):
     ray_origin = Point(0, 0, -5)
     wall_z = 10
     wall_size = 7.0
-    canvas_pixels = 255
+    canvas_pixels = 1024
     pixel_size = wall_size / canvas_pixels
     half = wall_size / 2
 
     canvas = Canvas(canvas_pixels, canvas_pixels)
-    color = Colors.RED
     sphere = Sphere()
-    sphere.transform = Matrix.rotation_z(math.pi / 4) * Matrix.scaling(0.5, 1, 1)
-    # sphere.transform = Matrix.shearing(1, 0, 0, 0, 0, 0) * Matrix.scaling(0.5, 1, 1)
+    sphere.material.color = Color(1, 0.2, 1)
+
+    light_position = Point(-10, 10, -10)
+    light_color = Color(1, 1, 1)
+    light = Light(light_position, light_color)
+
+    # Scale and rotate with: sphere.transform = Matrix.rotation_z(math.pi / 4) * Matrix.scaling(0.5, 1, 1)
+    # Shear with: sphere.transform = Matrix.shearing(1, 0, 0, 0, 0, 0) * Matrix.scaling(0.5, 1, 1)
 
     # For each row of pixels in the canvas
     for y in range(canvas_pixels):
         # Compute the world y coordinate (top = +half, bottom = -half)
         world_y = half - (pixel_size * y)
+        print('{y} of {canvas_pixels}'.format(y=y, canvas_pixels=canvas_pixels))
         # For each pixel in the row
         for x in range(canvas_pixels):
             # Compute the world x coordinate (left = -half, right = half)
@@ -85,7 +91,14 @@ def trace_sphere():
             position = Point(world_x, world_y, wall_z)
             r = Ray(ray_origin, (position - ray_origin).normalize())
             xs = sphere.intersect(r)
-            if xs.count > 0:
+            hit = xs.hit()
+            if hit is not None:
+                if with_ligthing:
+                    position = r.position(hit.t)
+                    color = sphere.material.lightning(light, position, -r.direction.normalize(),
+                                                      sphere.normal_at(position))
+                else:
+                    color = Colors.RED
                 canvas.set_pixel(x, y, color)
 
     with open("sphere.ppm", "w") as f:
@@ -111,4 +124,4 @@ if __name__ == "__main__":
     # Create a test image with `create_test_image()`, or
     # Plot the trajectory of a projectile with `plot_projectile_trajectory()`
     # Plot the face of a clock with `plot_clock()`
-    trace_sphere()
+    render_sphere(with_ligthing=True)
