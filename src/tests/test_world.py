@@ -32,7 +32,7 @@ class TestWorld(unittest.TestCase):
     def test_create_world(self):
         w = World()
         self.assertEqual(w.objects, [])
-        self.assertEqual(w.light, None)
+        self.assertIsNone(w.light)
 
     def test_default_world(self):
         self.assertEqual(Point(-10, 10, -10), self._world.light.position)
