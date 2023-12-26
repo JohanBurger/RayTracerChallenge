@@ -1,7 +1,9 @@
 import unittest
 
 from src.ray_tracer_challenge.intersection import Intersection, Intersections
+from src.ray_tracer_challenge.ray import Ray
 from src.ray_tracer_challenge.sphere import Sphere
+from src.ray_tracer_challenge.tuple import Point, Vector
 
 
 class TestIntersection(unittest.TestCase):
@@ -53,3 +55,31 @@ class TestIntersection(unittest.TestCase):
         xs = Intersections(i1, i2, i3, i4)
         i = xs.hit()
         self.assertIs(i4, i)
+
+    def test_precomputing_state_of_intersection(self):
+        r = Ray(Point(0, 0, -5), Vector(0, 0, 1))
+        shape = Sphere()
+        i = Intersection(4, shape)
+        comps = i.prepare_computations(r)
+        self.assertEqual(i.t, comps.t)
+        self.assertIs(i.object, comps.object)
+        self.assertEqual(Point(0, 0, -1), comps.point)
+        self.assertEqual(Vector(0, 0, -1), comps.eye_vector)
+        self.assertEqual(Vector(0, 0, -1), comps.normal_vector)
+
+    def test_precomputing_state_of_outside_hit(self):
+        r = Ray(Point(0, 0, -5), Vector(0, 0, 1))
+        shape = Sphere()
+        i = Intersection(4, shape)
+        comps = i.prepare_computations(r)
+        self.assertFalse(comps.inside)
+
+    def test_precomputing_state_of_inside_hit(self):
+        r = Ray(Point(0, 0, 0), Vector(0, 0, 1))
+        shape = Sphere()
+        i = Intersection(1, shape)
+        comps = i.prepare_computations(r)
+        self.assertEqual(Point(0, 0, 1), comps.point)
+        self.assertEqual(Vector(0, 0, -1), comps.eye_vector)
+        self.assertTrue(comps.inside)
+        self.assertEqual(Vector(0, 0, -1), comps.normal_vector)
