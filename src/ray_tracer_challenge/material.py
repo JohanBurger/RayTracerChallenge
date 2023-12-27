@@ -15,20 +15,20 @@ class Material:
 
     def __eq__(self, other):
         return self.color == other.color and \
-            math.isclose(self.ambient, other.ambient, rel_tol=EPSILON) and \
-            math.isclose(self.diffuse, other.diffuse, rel_tol=EPSILON) and \
-            math.isclose(self.specular, other.specular, rel_tol=EPSILON) and \
-            math.isclose(self.shininess, other.shininess, rel_tol=EPSILON)
+            math.isclose(self.ambient, other.ambient, abs_tol=EPSILON) and \
+            math.isclose(self.diffuse, other.diffuse, abs_tol=EPSILON) and \
+            math.isclose(self.specular, other.specular, abs_tol=EPSILON) and \
+            math.isclose(self.shininess, other.shininess, abs_tol=EPSILON)
 
-    def lightning(self, light: Light, position: Point, eye_v: Vector, normal_v: Vector) -> Color:
+    def lighting(self, light: Light, position: Point, eye_vector: Vector, normal_vector: Vector) -> Color:
         # Combine the surface color with the light's color/intensity.
         effective_color = self.color * light.intensity
 
         # Compute the diffuse contribution.
-        light_v = (light.position - position).normalize()
+        light_vector = (light.position - position).normalize()
         ambient = effective_color * self.ambient
 
-        light_dot_normal = normal_v.dot(light_v)
+        light_dot_normal = normal_vector.dot(light_vector)
 
         if light_dot_normal < 0:
             diffuse = Colors.BLACK
@@ -38,8 +38,8 @@ class Material:
 
             # reflect_dot_eye represents the cosine of the angle between the reflection vector
             # and the eye vector. A negative number means the light reflects away from the eye.
-            reflect_v = -light_v.reflect(normal_v)
-            reflect_dot_eye = reflect_v.dot(eye_v)
+            reflect_vector = -light_vector.reflect(normal_vector)
+            reflect_dot_eye = reflect_vector.dot(eye_vector)
 
             if reflect_dot_eye <= 0:
                 specular = Colors.BLACK

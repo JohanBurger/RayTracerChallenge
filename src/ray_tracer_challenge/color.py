@@ -29,9 +29,9 @@ class Color:
         return self._blue
 
     def __eq__(self, other):
-        return (math.isclose(self.red, other.red, rel_tol=EPSILON) and
-                math.isclose(self.green, other.green, rel_tol=EPSILON) and
-                math.isclose(self.blue, other.blue, rel_tol=EPSILON))
+        return (math.isclose(self.red, other.red, abs_tol=EPSILON) and
+                math.isclose(self.green, other.green, abs_tol=EPSILON) and
+                math.isclose(self.blue, other.blue, abs_tol=EPSILON))
 
     def __add__(self, other):
         return Color(self.red + other.red,
