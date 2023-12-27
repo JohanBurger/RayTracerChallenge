@@ -95,8 +95,8 @@ def render_sphere(with_ligthing: False):
             if hit is not None:
                 if with_ligthing:
                     position = r.position(hit.t)
-                    color = sphere.material.lightning(light, position, -r.direction.normalize(),
-                                                      sphere.normal_at(position))
+                    color = sphere.material.lighting(light, position, -r.direction.normalize(),
+                                                     sphere.normal_at(position))
                 else:
                     color = Colors.RED
                 canvas.set_pixel(x, y, color)
