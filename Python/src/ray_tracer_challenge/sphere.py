@@ -14,9 +14,6 @@ class Sphere:
     def __repr__(self):
         return f"Sphere(transform:{self.transform})"
 
-    def __repr__(self):
-        return f"Sphere(transform:{self.transform})"
-
     def intersect(self, ray: Ray) -> Intersections:
         obj_coord_ray = ray.transform(self.transform.inverse())
         sphere_to_ray = obj_coord_ray.origin - Point(0, 0, 0)
