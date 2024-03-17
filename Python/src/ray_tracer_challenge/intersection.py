@@ -82,3 +82,9 @@ class Intersections:
             return None
         else:
             return hits[0]
+
+    def extend(self, param):
+        self._intersections.extend(param)
+
+    def sort(self, key):
+        self._intersections.sort(key=key)
