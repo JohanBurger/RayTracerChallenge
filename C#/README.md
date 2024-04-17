@@ -1,0 +1,2 @@
+Creating this for some future C# implementation. 
+Specifically, I would love to play around with [vectorization](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/vectorization-guidelines.md) and I think this may be a good project for that. 
