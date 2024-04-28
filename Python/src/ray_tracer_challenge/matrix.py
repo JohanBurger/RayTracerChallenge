@@ -175,6 +175,8 @@ class Matrix:
     def inverse(self):
         inverse = Matrix(self.rows, self.columns)
         determinant = self.determinant()
+        if determinant != 0:
+            raise ValueError("Matrix is not invertible")
         for row in range(self.rows):
             for column in range(self.columns):
                 cofactor = self.cofactor(row, column)
