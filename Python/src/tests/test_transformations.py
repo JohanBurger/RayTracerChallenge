@@ -138,3 +138,38 @@ class TestChainingTransformations(unittest.TestCase):
         c = Matrix.translation(10, 5, 7)
         t = c * b * a
         self.assertEqual(Point(15, 0, 7), t * p)
+
+
+class TestViewTransformation(unittest.TestCase):
+    def test_default_view_transformation(self):
+        from_point = Point(0, 0, 0)
+        to_point = Point(0, 0, -1)
+        up_vector = Vector(0, 1, 0)
+        transform = Matrix.view_transform(from_point, to_point, up_vector)
+        self.assertEqual(Matrix.identity(), transform)
+
+    def test_looking_positive_z_direction(self):
+        from_point = Point(0, 0, 0)
+        to_point = Point(0, 0, 1)
+        up_vector = Vector(0, 1, 0)
+        transform = Matrix.view_transform(from_point, to_point, up_vector)
+        self.assertEqual(Matrix.scaling(-1, 1, -1), transform)
+
+    def test_view_transformation_moves_world(self):
+        from_point = Point(0, 0, 8)
+        to_point = Point(0, 0, 0)
+        up_vector = Vector(0, 1, 0)
+        transform = Matrix.view_transform(from_point, to_point, up_vector)
+        self.assertEqual(Matrix.translation(0, 0, -8), transform)
+
+    def test_arbitrary_view_transformation(self):
+        from_point = Point(1, 3, 2)
+        to_point = Point(4, -2, 8)
+        up_vector = Vector(1, 1, 0)
+        transform = Matrix.view_transform(from_point, to_point, up_vector)
+        self.assertEqual(Matrix([
+            [-0.50709, 0.50709, 0.67612, -2.36643],
+            [0.76772, 0.60609, 0.12122, -2.82843],
+            [-0.35857, 0.59761, -0.71714, 0.00000],
+            [0.00000, 0.00000, 0.00000, 1.00000]
+        ]), transform)

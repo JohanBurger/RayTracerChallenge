@@ -15,11 +15,11 @@ class World:
         intersections.sort(key=lambda x: x.t)
         return intersections
 
-    def shade_hit(self, comps: Computations) -> Color:
-        return comps.object.material.lighting(self.light,
-                                              comps.point,
-                                              comps.eye_vector,
-                                              comps.normal_vector)
+    def shade_hit(self, computations: Computations) -> Color:
+        return computations.object.material.lighting(self.light,
+                                                     computations.point,
+                                                     computations.eye_vector,
+                                                     computations.normal_vector)
 
     def color_at(self, ray: Ray) -> Color:
         intersections = self.intersect(ray)

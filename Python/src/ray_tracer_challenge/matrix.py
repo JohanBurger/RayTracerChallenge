@@ -175,11 +175,28 @@ class Matrix:
     def inverse(self):
         inverse = Matrix(self.rows, self.columns)
         determinant = self.determinant()
-        if determinant != 0:
-            raise ValueError("Matrix is not invertible")
+        # if determinant != 0:
+        #     raise ValueError("Matrix is not invertible")
         for row in range(self.rows):
             for column in range(self.columns):
                 cofactor = self.cofactor(row, column)
                 inverse[column, row] = cofactor / determinant
 
         return inverse
+
+    @classmethod
+    def view_transform(cls, from_point, to_point, up_vector):
+        forward = (to_point - from_point).normalize()
+        left = forward.cross(up_vector.normalize())
+        true_up = left.cross(forward)
+        orientation = Matrix.identity()
+        orientation[0, 0] = left.x
+        orientation[0, 1] = left.y
+        orientation[0, 2] = left.z
+        orientation[1, 0] = true_up.x
+        orientation[1, 1] = true_up.y
+        orientation[1, 2] = true_up.z
+        orientation[2, 0] = -forward.x
+        orientation[2, 1] = -forward.y
+        orientation[2, 2] = -forward.z
+        return orientation * Matrix.translation(-from_point.x, -from_point.y, -from_point.z)
