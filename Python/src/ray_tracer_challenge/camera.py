@@ -1,5 +1,6 @@
 import math
 
+from src.ray_tracer_challenge.canvas import Canvas
 from src.ray_tracer_challenge.matrix import Matrix
 from src.ray_tracer_challenge.ray import Ray
 from src.ray_tracer_challenge.tuple import Point
@@ -72,12 +73,10 @@ class Camera:
         return Ray(origin, direction)
 
     def render(self, world):
-        image = []
+        canvas = Canvas(self._hsize, self._vsize)
         for y in range(self._vsize):
-            row = []
             for x in range(self._hsize):
                 ray = self.ray_for_pixel(x, y)
                 color = world.color_at(ray)
-                row.append(color)
-            image.append(row)
-        return image
+                canvas.set_pixel(x, y, color)
+        return canvas
