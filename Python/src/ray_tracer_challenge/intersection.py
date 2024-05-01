@@ -37,7 +37,7 @@ class Computations:
         return self._inside
 
 
-class Intersection():
+class Intersection:
     def __init__(self, t, object):
         self._t = t
         self._object = object
