@@ -1,11 +1,16 @@
 import math
+from collections import namedtuple
 
+from PIL import Image
+
+from src.ray_tracer_challenge.camera import Camera
 from src.ray_tracer_challenge.canvas import Canvas
 from src.ray_tracer_challenge.color import Color, Colors
 from src.ray_tracer_challenge.ray import Ray
 from src.ray_tracer_challenge.sphere import Sphere
 from src.ray_tracer_challenge.tuple import Light, Point, Vector
 from src.ray_tracer_challenge.matrix import Matrix
+from src.ray_tracer_challenge.world import World
 
 
 def create_test_image():
@@ -120,8 +125,77 @@ def plot_clock():
         f.write(c.to_ppm())
 
 
+def adjust_plane(sphere):
+    scaling = Matrix.scaling(10, 0.01, 10)
+    color = Color(1, 0.9, 0.9)
+    specular = 0
+    sphere.transform = sphere.transform * scaling
+    sphere.material.color = color
+    sphere.material.specular = specular
+
+
+def render_with_camera(resolution):
+    floor = Sphere()
+    adjust_plane(floor)
+
+    left_wall = Sphere()
+    left_wall.transform = (Matrix.translation(0, 0, 5) *
+                           Matrix.rotation_y(-math.pi / 4) *
+                           Matrix.rotation_x(math.pi / 2))
+    adjust_plane(left_wall)
+
+    right_wall = Sphere()
+    right_wall.transform = (Matrix.translation(0, 0, 5) *
+                            Matrix.rotation_y(math.pi / 4) *
+                            Matrix.rotation_x(math.pi / 2))
+    adjust_plane(right_wall)
+
+    middle = Sphere()
+    middle.transform = Matrix.translation(-0.5, 1, 0.5)
+    middle.material.color = Color(0.1, 1, 0.5)
+    middle.material.diffuse = 0.7
+    middle.material.specular = 0.3
+
+    right = Sphere()
+    right.transform = Matrix.translation(1.5, 0.5, -0.5) * Matrix.scaling(0.5, 0.5, 0.5)
+    right.material.color = Color(0.5, 1, 0.1)
+    right.material.diffuse = 0.7
+    right.material.specular = 0.3
+
+    left = Sphere()
+    left.transform = Matrix.translation(-1.5, 0.33, -0.75) * Matrix.scaling(0.33, 0.33, 0.33)
+    left.material.color = Color(1, 0.8, 0.1)
+    left.material.diffuse = 0.7
+    left.material.specular = 0.3
+
+    world = World()
+    world.objects.extend([floor, left_wall, right_wall, middle, right, left])
+    world.light = Light(Point(-10, 10, -10), Colors.WHITE)
+    print('Created world!')
+
+    camera = Camera(resolution.horizontal_pixels, resolution.vertical_pixels, math.pi / 3)
+    camera.transform = Matrix.view_transform(Point(0, 1.5, -5), Point(0, 1, 0), Vector(0, 1, 0))
+    print('Created camera!')
+
+    print('Rendering world!')
+    canvas = camera.render(world)
+    name = 'render_with_camera'
+    ppm_file = f'{name}.ppm'
+    with open(ppm_file, 'w') as f:
+        f.write(canvas.to_ppm())
+    image = Image.open(ppm_file)
+    image.save(f'{name}.jpg')
+    print('Done!')
+
+
+Resolution = namedtuple("Resolution", "horizontal_pixels vertical_pixels")
+resolution_480p = Resolution(640, 480)  # 307 200 px
+resolution_720p = Resolution(1280, 720)  # 921 600 px
+resolution_1080p = Resolution(1920, 1080)  # 2 073 600 px
+
 if __name__ == "__main__":
     # Create a test image with `create_test_image()`, or
     # Plot the trajectory of a projectile with `plot_projectile_trajectory()`
     # Plot the face of a clock with `plot_clock()`
-    render_sphere(with_ligthing=True)
+    # Render a pretty sphere with render_sphere(with_ligthing=True)
+    render_with_camera(resolution_720p)

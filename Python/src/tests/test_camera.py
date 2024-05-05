@@ -55,4 +55,4 @@ class TeastCamera(unittest.TestCase):
         up = Vector(0, 1, 0)
         c.transform = Matrix.view_transform(origin, to, up)
         image = c.render(w)
-        self.assertEqual(Color(0.38066, 0.47583, 0.2855), image[5][5])
+        self.assertEqual(Color(0.38066, 0.47583, 0.2855), image.get_pixel(5, 5))
