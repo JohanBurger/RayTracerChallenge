@@ -20,13 +20,17 @@ class Material:
             math.isclose(self.specular, other.specular, abs_tol=EPSILON) and \
             math.isclose(self.shininess, other.shininess, abs_tol=EPSILON)
 
-    def lighting(self, light: Light, position: Point, eye_vector: Vector, normal_vector: Vector) -> Color:
+    def lighting(self, light: Light, position: Point, eye_vector: Vector, normal_vector: Vector,
+                 in_shadow: bool) -> Color:
         # Combine the surface color with the light's color/intensity.
         effective_color = self.color * light.intensity
 
         # Compute the diffuse contribution.
         light_vector = (light.position - position).normalize()
         ambient = effective_color * self.ambient
+
+        if in_shadow:
+            return ambient
 
         light_dot_normal = normal_vector.dot(light_vector)
 
